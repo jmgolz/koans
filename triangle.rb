@@ -15,6 +15,24 @@
 #
 def triangle(a, b, c)
   # WRITE THIS CODE
+  get_angles = []
+  get_angles << a
+  get_angles << b
+  get_angles << c
+  get_angles.uniq!
+    
+  #if 1 unique, all sides are equal
+  if get_angles.length == 1
+  	:equilateral
+  
+  #if 2 uniques, two out of three angles are similar, third is unique
+  elsif get_angles.length == 2
+  	:isosceles
+  
+  #if 3 uniques, no sides are equal
+  elsif get_angles.length == 3
+  	:scalene
+  end
 end
 
 # Error class used in part 2.  No need to change this code.

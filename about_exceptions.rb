@@ -3,13 +3,23 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 class AboutExceptions < Neo::Koan
 
   class MySpecialError < RuntimeError
+    def initialize(string='')
+      
+    end
   end
 
   def test_exceptions_inherit_from_Exception
-    assert_equal __, MySpecialError.ancestors[1]
-    assert_equal __, MySpecialError.ancestors[2]
-    assert_equal __, MySpecialError.ancestors[3]
-    assert_equal __, MySpecialError.ancestors[4]
+    @get_exception_ancestors = nil
+    begin
+      raise MySpecialError
+    rescue MySpecialError => e
+      @get_exception_ancestors = MySpecialError.ancestors
+    end
+
+    assert_equal @get_exception_ancestors[1], MySpecialError.ancestors[1]
+    assert_equal @get_exception_ancestors[2], MySpecialError.ancestors[2]
+    assert_equal @get_exception_ancestors[3], MySpecialError.ancestors[3]
+    assert_equal @get_exception_ancestors[4], MySpecialError.ancestors[4]
   end
 
   def test_rescue_clause
@@ -17,18 +27,18 @@ class AboutExceptions < Neo::Koan
     begin
       fail "Oops"
     rescue StandardError => ex
-      result = :exception_handled
+      result = ex
     end
 
-    assert_equal __, result
+    assert_equal ex, result
 
-    assert_equal __, ex.is_a?(StandardError), "Should be a Standard Error"
-    assert_equal __, ex.is_a?(RuntimeError),  "Should be a Runtime Error"
+    assert_equal true, ex.is_a?(StandardError), "Should be a Standard Error"
+    assert_equal result.is_a?(RuntimeError), ex.is_a?(RuntimeError),  "Should be a Runtime Error"
 
     assert RuntimeError.ancestors.include?(StandardError),
       "RuntimeError is a subclass of StandardError"
 
-    assert_equal __, ex.message
+    assert_equal result.message, ex.message
   end
 
   def test_raising_a_particular_error
@@ -37,11 +47,10 @@ class AboutExceptions < Neo::Koan
       # 'raise' and 'fail' are synonyms
       raise MySpecialError, "My Message"
     rescue MySpecialError => ex
-      result = :exception_handled
+      result = ex
     end
-
-    assert_equal __, result
-    assert_equal __, ex.message
+    assert_equal ex, result
+    assert_equal result.message, ex.message
   end
 
   def test_ensure_clause
