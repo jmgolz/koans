@@ -55,21 +55,22 @@ class AboutExceptions < Neo::Koan
 
   def test_ensure_clause
     result = nil
+    @always_run = nil
     begin
       fail "Oops"
     rescue StandardError
-      # no code here
+      # no code here      
     ensure
       result = :always_run
     end
 
-    assert_equal __, result
+    assert_equal :always_run, result
   end
 
   # Sometimes, we must know about the unknown
   def test_asserting_an_error_is_raised
     # A do-end is a block, a topic to explore more later
-    assert_raise(___) do
+    assert_raise(MySpecialError) do
       raise MySpecialError.new("New instances can be raised directly.")
     end
   end

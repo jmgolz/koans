@@ -19,18 +19,23 @@ def triangle(a, b, c)
   get_angles << a
   get_angles << b
   get_angles << c
-  get_angles.uniq!
-    
+  
+  get_angles.each{ |angle| 
+    if(angle <= 0)
+      raise TriangleError
+    end
+  }
+
   #if 1 unique, all sides are equal
-  if get_angles.length == 1
+  if get_angles.uniq.length == 1
   	:equilateral
   
   #if 2 uniques, two out of three angles are similar, third is unique
-  elsif get_angles.length == 2
+  elsif get_angles.uniq.length == 2
   	:isosceles
   
   #if 3 uniques, no sides are equal
-  elsif get_angles.length == 3
+  elsif get_angles.uniq.length == 3
   	:scalene
   end
 end
