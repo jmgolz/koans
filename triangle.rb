@@ -19,12 +19,14 @@ def triangle(a, b, c)
   get_angles << a
   get_angles << b
   get_angles << c
-  
-  get_angles.each{ |angle| 
-    if(angle <= 0)
-      raise TriangleError
-    end
-  }
+  get_angles.sort!
+
+  if(get_angles.min <= 0)
+    raise TriangleError.new("Found illegal value: #{get_angles.min}")
+  elsif get_angles[0] + get_angles[1] <= get_angles[2]
+    raise TriangleError.new("Two of three triangle sides must be greater than third side")
+  end
+
 
   #if 1 unique, all sides are equal
   if get_angles.uniq.length == 1
