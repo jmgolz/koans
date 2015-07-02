@@ -31,6 +31,13 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 def score(dice)
   # You need to write this method
+  sum_of_dice_roll = 0
+
+  if dice.size == 0
+    return sum_of_dice_roll
+  end
+
+
 end
 
 class AboutScoringProject < Neo::Koan
