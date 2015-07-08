@@ -13,7 +13,7 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
     @values = []
 
     roll_value.times do |i|
-      @values << rand(6)
+      @values << rand(1..6)
     end
   end
 
